@@ -12,21 +12,33 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/books")
 public class BookController {
 
-    private final BookService bookService;
-
     @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    BookService bookService;
 
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+
+    @GetMapping("/books")
     public List<Book> getAllBooks(){
         return bookService.getAllBooks();
+    }
+
+    @GetMapping("/books/{id}")
+    private Book getStudent(@PathVariable("id") UUID id)
+    {
+        return bookService.getBookById(id);
+    }
+
+    @DeleteMapping("/books/{id}")
+    private void deleteStudent(@PathVariable("id") UUID id)
+    {
+        bookService.deleteBookById(id);
+    }
+    //creating post mapping that post the student detail in the database
+    @PostMapping("/books")
+    private UUID saveStudent(@RequestBody Book book)
+    {
+        bookService.persistNewBook(book);
+        return book.getId();
     }
 }

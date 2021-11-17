@@ -18,7 +18,7 @@ public class BookDaoImpl implements BooksDao {
     public BookDaoImpl() {
         database = new HashMap<>();
         UUID id = UUID.randomUUID();
-        database.put(id, new Book(id, "Brothers"));
+        //database.put(id, new Book(id, "Brothers"));
     }
 
 

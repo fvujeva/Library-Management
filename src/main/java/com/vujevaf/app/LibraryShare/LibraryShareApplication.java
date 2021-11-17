@@ -1,21 +1,19 @@
 package com.vujevaf.app.LibraryShare;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.vujevaf.app.LibraryShare.model.Book;
-import com.vujevaf.app.LibraryShare.dao.BookDaoImpl;
-import com.vujevaf.app.LibraryShare.services.BookService;
+import com.vujevaf.app.LibraryShare.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.UUID;
 
+
 @SpringBootApplication
-public class LibraryShareApplication {
+public class LibraryShareApplication{
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryShareApplication.class, args);
@@ -27,5 +25,24 @@ public class LibraryShareApplication {
 			System.out.println(book.getTitle());
 		}*/
 
+	}
+
+	@Component
+	class DemoCommandLineRunner implements CommandLineRunner {
+
+		@Autowired
+		private BookRepository bookRepository;
+
+		@Override
+		public void run(String... args) throws Exception {
+
+			Book audi = new Book(UUID.randomUUID(), "Lolita");
+
+			bookRepository.save(audi);
+
+			Book tesla = new Book(UUID.randomUUID(), "Brothers Karamazov");
+
+			bookRepository.save(tesla);
+		}
 	}
 }
